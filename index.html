@@ -735,6 +735,9 @@
     <h4 class="rsvp-dialog-title">RSVP</h4>
     <p class="rsvp-dialog-sub">Facci sapere se ci sarai, conta anche per noi!</p>
     <form id="rsvpForm" novalidate>
+      <input type="hidden" name="_subject" value="Nuova conferma RSVP - Gaia & Giacomo">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
       <label class="rsvp-field">
         <span>Nome e Cognome</span>
         <input type="text" name="nome" required>
@@ -780,11 +783,11 @@
 <footer>GAIA &amp; GIACOMO — 12 SETTEMBRE 2027 — <a href="https://www.google.com/maps/search/?api=1&query=Cascina+Caremma+Besate+MI" target="_blank" rel="noopener">CASCINA CAREMMA, BESATE (MI)</a></footer>
 
 <script>
-  // ---------- RSVP: invio conferma via Formspree ----------
-  // 1. Crea un account gratuito su https://formspree.io
-  // 2. Crea un nuovo form e collega l'indirizzo email a cui vuoi ricevere le conferme
-  // 3. Copia l'endpoint del form (es. https://formspree.io/f/xxxxxxxx) e incollalo qui sotto
-  const RSVP_FORM_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID";
+  // ---------- RSVP: invio conferma via FormSubmit ----------
+  // Le conferme vengono inviate a gaiaegiacomo21@gmail.com tramite formsubmit.co
+  // (nessun account richiesto). Al primo invio, FormSubmit manda a quell'indirizzo
+  // una mail di conferma una tantum: va cliccato il link per attivare l'inoltro.
+  const RSVP_FORM_ENDPOINT = "https://formsubmit.co/ajax/gaiaegiacomo21@gmail.com";
 
   const rsvpDialog = document.getElementById("rsvpDialog");
   const rsvpOpenBtn = document.getElementById("rsvpOpenBtn");
@@ -802,12 +805,7 @@
     e.preventDefault();
     const submitBtn = rsvpForm.querySelector(".rsvp-submit");
     const data = new FormData(rsvpForm);
-
-    if (RSVP_FORM_ENDPOINT.includes("YOUR_FORM_ID")) {
-      rsvpStatus.textContent = "Modulo non ancora configurato: imposta RSVP_FORM_ENDPOINT nel codice.";
-      rsvpStatus.className = "rsvp-status error";
-      return;
-    }
+    const payload = Object.fromEntries(data.entries());
 
     submitBtn.disabled = true;
     rsvpStatus.textContent = "Invio in corso…";
@@ -816,8 +814,8 @@
     try {
       const res = await fetch(RSVP_FORM_ENDPOINT, {
         method: "POST",
-        headers: { Accept: "application/json" },
-        body: data,
+        headers: { Accept: "application/json", "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
       });
       if (res.ok) {
         rsvpStatus.textContent = "Grazie! La tua conferma è stata inviata.";
