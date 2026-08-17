@@ -790,27 +790,25 @@
   // ---------- MAPS: redirect intelligente iOS/Android/Web ----------
   function openMaps(event) {
     event.preventDefault();
-    const lat = "45.1667";
-    const lng = "8.9167";
-    const name = "Cascina Caremma";
+    const mapsLink = "https://maps.app.goo.gl/4XLgUsYMYVJDXWsi7?g_st=ic";
 
     // Rileva user agent
     const userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
-    // iOS
+    // iOS - Apri Google Maps o Apple Maps fallback
     if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-      window.location.href = `maps://maps.apple.com/?q=${name}&ll=${lat},${lng}`;
+      window.location.href = mapsLink;
       return;
     }
 
-    // Android
+    // Android - Apri Google Maps
     if (/android/i.test(userAgent)) {
-      window.location.href = `geo:${lat},${lng}?q=${name}`;
+      window.location.href = mapsLink;
       return;
     }
 
-    // Web/Desktop - Google Maps
-    window.open("https://www.google.com/maps/search/?api=1&query=Cascina+Caremma+Besate+MI", "_blank");
+    // Web/Desktop - Apri Google Maps
+    window.open(mapsLink, "_blank");
   }
 
   // ---------- RSVP: invio conferma via FormSubmit ----------
