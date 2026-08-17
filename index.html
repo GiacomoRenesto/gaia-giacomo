@@ -791,19 +791,22 @@
   function openMaps(event) {
     event.preventDefault();
     const mapsLink = "https://maps.app.goo.gl/4XLgUsYMYVJDXWsi7?g_st=ic";
+    const lat = "45.3186378";
+    const lng = "8.9460324";
+    const name = "Cascina Caremma";
 
     // Rileva user agent
     const userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
-    // iOS - Apri Google Maps o Apple Maps fallback
+    // iOS - Apri Apple Maps con coordinate esatte
     if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-      window.location.href = mapsLink;
+      window.location.href = `maps://maps.apple.com/?q=${name}&ll=${lat},${lng}`;
       return;
     }
 
     // Android - Apri Google Maps
     if (/android/i.test(userAgent)) {
-      window.location.href = mapsLink;
+      window.location.href = `geo:${lat},${lng}?q=${name}`;
       return;
     }
 
