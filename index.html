@@ -571,6 +571,20 @@
     max-width: 340px;
     color: rgba(255,255,255,.85);
     font-style: italic;
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+  }
+  .copy-icon{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    opacity: .7;
+    transition: opacity .2s ease;
+    flex-shrink: 0;
+  }
+  .copy-icon:hover{
+    opacity: 1;
   }
   .grazie{
     font-family: var(--font-script);
@@ -765,7 +779,13 @@
 
     <div class="iban-block">
       <div class="iban-label">IBAN</div>
-      <div class="iban-value">da comunicare a breve</div>
+      <div class="iban-value">
+        <span id="ibanValue">IT60XXXXXXXXXXXXXXXXXXXXXX</span>
+        <svg class="copy-icon" onclick="copyToClipboard()" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" title="Copia IBAN">
+          <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+          <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+        </svg>
+      </div>
     </div>
 
     <div class="grazie">Grazie 🤍</div>
@@ -778,6 +798,21 @@
 <footer>GAIA &amp; GIACOMO — 12 SETTEMBRE 2027 — <a href="https://www.google.com/maps/search/?api=1&query=Cascina+Caremma+Besate+MI" target="_blank" rel="noopener" class="maps-link" onclick="openMaps(event)"><span class="map-pin">📍</span>CASCINA CAREMMA, BESATE (MI)</a></footer>
 
 <script>
+  // ---------- IBAN: copia negli appunti ----------
+  function copyToClipboard() {
+    const ibanValue = document.getElementById("ibanValue").textContent;
+    navigator.clipboard.writeText(ibanValue).then(() => {
+      const icon = document.querySelector(".copy-icon");
+      const originalStroke = icon.getAttribute("stroke");
+      icon.setAttribute("stroke", "#E9C261");
+      setTimeout(() => {
+        icon.setAttribute("stroke", originalStroke);
+      }, 1500);
+    }).catch(err => {
+      console.error("Errore nella copia:", err);
+    });
+  }
+
   // ---------- MAPS: redirect intelligente iOS/Android/Web ----------
   function openMaps(event) {
     event.preventDefault();
