@@ -432,6 +432,7 @@
     line-height:1;
     color: var(--forest-deep);
     cursor:pointer;
+    outline:none;
   }
   .rsvp-dialog-title{
     font-family: var(--font-display);
@@ -514,7 +515,9 @@
   .rsvp-status.error{ color: #a4463a; }
 
   @media (max-width: 860px){
-    .cards{ grid-template-columns:1fr; gap:3.4rem; }
+    .cards{ grid-template-columns:1fr; gap:3.4rem; place-items: center; margin: 0 auto; }
+    .card{ width: 100%; max-width: 90%; margin: 0 auto; }
+    .card img{ width: 100%; height: auto; }
   }
 
   /* ================= GIFT ================= */
@@ -594,6 +597,8 @@
     text-underline-offset: 3px;
   }
   footer a:hover{ color: var(--white); }
+  .maps-link{ cursor:pointer; }
+  .map-pin{ margin-right:0.3rem; font-size:1.1em; }
 </style>
 </head>
 <body>
@@ -632,7 +637,7 @@
       <div class="ring-divider"></div>
       <div class="ring">
         <svg viewBox="0 0 172 172" width="100%" height="100%" stroke="#E9C261" stroke-width="1.6" stroke-linecap="round" opacity="0.95"><line x1="148.0" y1="86.0" x2="172.0" y2="86.0"/><line x1="147.4" y1="94.4" x2="159.3" y2="96.1"/><line x1="145.7" y1="102.7" x2="157.3" y2="106.0"/><line x1="142.9" y1="110.7" x2="164.9" y2="120.3"/><line x1="139.0" y1="118.2" x2="149.2" y2="124.4"/><line x1="134.1" y1="125.1" x2="143.4" y2="132.7"/><line x1="128.3" y1="131.3" x2="144.7" y2="148.9"/><line x1="121.8" y1="136.7" x2="128.7" y2="146.5"/><line x1="114.5" y1="141.0" x2="120.0" y2="151.7"/><line x1="106.8" y1="144.4" x2="114.8" y2="167.0"/><line x1="98.6" y1="146.7" x2="101.1" y2="158.5"/><line x1="90.2" y1="147.9" x2="91.0" y2="159.8"/><line x1="81.8" y1="147.9" x2="80.1" y2="171.8"/><line x1="73.4" y1="146.7" x2="70.9" y2="158.5"/><line x1="65.2" y1="144.4" x2="61.2" y2="155.7"/><line x1="57.5" y1="141.0" x2="46.4" y2="162.4"/><line x1="50.2" y1="136.7" x2="43.3" y2="146.5"/><line x1="43.7" y1="131.3" x2="35.5" y2="140.1"/><line x1="37.9" y1="125.1" x2="19.3" y2="140.3"/><line x1="33.0" y1="118.2" x2="22.8" y2="124.4"/><line x1="29.1" y1="110.7" x2="18.1" y2="115.5"/><line x1="26.3" y1="102.7" x2="3.2" y2="109.2"/><line x1="24.6" y1="94.4" x2="12.7" y2="96.1"/><line x1="24.0" y1="86.0" x2="12.0" y2="86.0"/><line x1="24.6" y1="77.6" x2="0.8" y2="74.3"/><line x1="26.3" y1="69.3" x2="14.7" y2="66.0"/><line x1="29.1" y1="61.3" x2="18.1" y2="56.5"/><line x1="33.0" y1="53.8" x2="12.5" y2="41.3"/><line x1="37.9" y1="46.9" x2="28.6" y2="39.3"/><line x1="43.7" y1="40.7" x2="35.5" y2="31.9"/><line x1="50.2" y1="35.3" x2="36.4" y2="15.7"/><line x1="57.5" y1="31.0" x2="52.0" y2="20.3"/><line x1="65.2" y1="27.6" x2="61.2" y2="16.3"/><line x1="73.4" y1="25.3" x2="68.5" y2="1.8"/><line x1="81.8" y1="24.1" x2="81.0" y2="12.2"/><line x1="90.2" y1="24.1" x2="91.0" y2="12.2"/><line x1="98.6" y1="25.3" x2="103.5" y2="1.8"/><line x1="106.8" y1="27.6" x2="110.8" y2="16.3"/><line x1="114.5" y1="31.0" x2="120.0" y2="20.3"/><line x1="121.8" y1="35.3" x2="135.6" y2="15.7"/><line x1="128.3" y1="40.7" x2="136.5" y2="31.9"/><line x1="134.1" y1="46.9" x2="143.4" y2="39.3"/><line x1="139.0" y1="53.8" x2="159.5" y2="41.3"/><line x1="142.9" y1="61.3" x2="153.9" y2="56.5"/><line x1="145.7" y1="69.3" x2="157.3" y2="66.0"/><line x1="147.4" y1="77.6" x2="171.2" y2="74.3"/></svg>
-        <div class="ring-text"><a href="https://www.google.com/maps/search/?api=1&query=Cascina+Caremma+Besate+MI" target="_blank" rel="noopener">CASCINA<br>CAREMMA<br>Besate (MI)</a></div>
+        <div class="ring-text"><a href="https://www.google.com/maps/search/?api=1&query=Cascina+Caremma+Besate+MI" target="_blank" rel="noopener" class="maps-link" onclick="openMaps(event)"><span class="map-pin">📍</span>CASCINA<br>CAREMMA<br>Besate (MI)</a></div>
       </div>
     </div>
   </div>
@@ -733,7 +738,6 @@
   <dialog class="rsvp-dialog" id="rsvpDialog">
     <button type="button" class="rsvp-close" id="rsvpCloseBtn" aria-label="Chiudi">&times;</button>
     <h4 class="rsvp-dialog-title">RSVP</h4>
-    <p class="rsvp-dialog-sub">Facci sapere se ci sarai, conta anche per noi!</p>
     <form id="rsvpForm" novalidate>
       <input type="hidden" name="_subject" value="Nuova conferma RSVP - Gaia & Giacomo">
       <input type="hidden" name="_template" value="table">
@@ -780,9 +784,35 @@
   </div>
 </section>
 
-<footer>GAIA &amp; GIACOMO — 12 SETTEMBRE 2027 — <a href="https://www.google.com/maps/search/?api=1&query=Cascina+Caremma+Besate+MI" target="_blank" rel="noopener">CASCINA CAREMMA, BESATE (MI)</a></footer>
+<footer>GAIA &amp; GIACOMO — 12 SETTEMBRE 2027 — <a href="https://www.google.com/maps/search/?api=1&query=Cascina+Caremma+Besate+MI" target="_blank" rel="noopener" class="maps-link" onclick="openMaps(event)"><span class="map-pin">📍</span>CASCINA CAREMMA, BESATE (MI)</a></footer>
 
 <script>
+  // ---------- MAPS: redirect intelligente iOS/Android/Web ----------
+  function openMaps(event) {
+    event.preventDefault();
+    const lat = "45.1667";
+    const lng = "8.9167";
+    const name = "Cascina Caremma";
+
+    // Rileva user agent
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+    // iOS
+    if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+      window.location.href = `maps://maps.apple.com/?q=${name}&ll=${lat},${lng}`;
+      return;
+    }
+
+    // Android
+    if (/android/i.test(userAgent)) {
+      window.location.href = `geo:${lat},${lng}?q=${name}`;
+      return;
+    }
+
+    // Web/Desktop - Google Maps
+    window.open("https://www.google.com/maps/search/?api=1&query=Cascina+Caremma+Besate+MI", "_blank");
+  }
+
   // ---------- RSVP: invio conferma via FormSubmit ----------
   // Le conferme vengono inviate a gaiaegiacomo21@gmail.com tramite formsubmit.co
   // (nessun account richiesto). Al primo invio, FormSubmit manda a quell'indirizzo
